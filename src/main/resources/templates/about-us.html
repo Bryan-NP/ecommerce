@@ -1,16 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<html lang ="en" xmlns:th="http:www.thymeleaf.com"
+    ~th:replace="~{base::html(
+        ~{::title},
+        ~{::content},
+        ~{additionalCss},
+        ~{}
+    )}">
+
+<th:block th:fragment ="additionalCss">
     <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-    <h1>Welcome to TravelGear</h1>
-    <img src="holiday.jpg" id = "champion-image" alt="holiday"/>
-    <p>Your one-stop place for shop</p>
-    <p>Current Date Time: <span th:text="${CurrentDateTime}"></span></p>
-    
-</body>
+    </th:block>
+
+<title>Holiday Vacation</title>
+
+<th:block th:fragment="content">
+    <h1 class="display-1">About Us</h1>
+    <img src ="holiday.jpg" id = "champion-image"/>
+    <p class="lead">We are a travel company that provides the best travel experience for you!</p>
+    <p>Current Date Time: <span th:text="${CurrentDateTime}"</p>
+</th:block>
+
 </html>

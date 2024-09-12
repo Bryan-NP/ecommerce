@@ -35,6 +35,9 @@ public class HomeController{
         return "about-us";
     }
 
-
+    @GetMapping("/contact-us")
+    public String contactUs(){
+        return "contact-us";
+    }
        
 }
