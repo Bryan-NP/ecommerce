@@ -4,6 +4,8 @@ import jakarta.validation.constraints.*;
 import java.math.*;
 import java.util.*;
 
+import com.stripe.model.StripeObject;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -132,6 +134,10 @@ public class Product {
    public int hashCode() {
        return Objects.hash(id, name, description, price);
    }
+public Optional<StripeObject> findById(Long valueOf) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'findById'");
+}
 }
 
 

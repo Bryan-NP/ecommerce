@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{
+    base::html(
+        ~{::title},
+        ~{::content},
+        ~{},
+        ~{}
+    )
+}">
+<title>Order History</title>
+
+<th:block th:fragment="content">
+    <ul>
+        <li>
+            <strong>Order User:</strong>
+            <span th:text="${username}"></span>
+        </li>
+    </ul>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${orderItem}">
+                <td th:text="${item.product.id}"></td>
+                <td th:text="${item.product.name}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.quantity * item.price}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <button type="button" class="btn btn-primary" onclick="window.history.back();">Return</button>
+
+</th:block>
+</html>
