@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.models.OrderItem;
-import com.example.demo.models.User;
 
 import jakarta.transaction.Transactional;
 

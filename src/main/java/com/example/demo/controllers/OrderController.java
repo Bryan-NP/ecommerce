@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.models.Orders;
 import com.example.demo.models.User;
 import com.example.demo.services.OrderService;
 import com.example.demo.services.UserService;
-import com.example.demo.repo.UserRepo;
 import com.example.demo.repo.*;
 
 @Controller
@@ -77,4 +77,28 @@ public class OrderController {
         orderRepo.deleteByUserAndId(user, id);
         return "redirect:/order/{id}";
     }
+
+    // Get edit form for a particular order item
+@GetMapping("/edit/{id}")
+public String getEditOrderItem(@PathVariable Long id, Model model) {
+    var orderItem = orderItemRepo.findByOrder(id);
+    model.addAttribute("orderItem", orderItem);
+    return "order/edit"; // Return to the edit form template
+}
+
+// Process the edited order item
+@PostMapping("/edit/{id}")
+public String processEditOrderItem(@PathVariable Long id, 
+                                    @RequestParam int quantity, 
+                                    RedirectAttributes redirectAttributes) {
+    var orderItem = orderItemRepo.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid item Id:" + id));
+    
+    orderItem.setQuantity(quantity); // Update quantity
+    orderItemRepo.save(orderItem); // Save changes
+    
+    redirectAttributes.addFlashAttribute("message", "Order item updated successfully!");
+    return "redirect:/order"; // Redirect back to the order list
+}
+
 }
