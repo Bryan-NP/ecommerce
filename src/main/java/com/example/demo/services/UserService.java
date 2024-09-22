@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import org.hibernate.annotations.DialectOverride.OverridesAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
