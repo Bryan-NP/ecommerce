@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{
+    base::html(
+        ~{::title},
+        ~{::content},
+        ~{},
+        ~{}
+    )
+}">
+<title>All Orders</title>
+<th:block th:fragment="content">
+  <h1 class="mb-4">All Orders</h1>
+  <div th:if="${#lists.isEmpty(orders)}" class="alert alert-info">
+    No Active Orders Found!
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="order : ${order}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.user.id}"></td>
+        <td th:text="${order.user.username}"></td>
+        <td>
+          <a th:href="@{/order/{id}(id=${order.id})}" class="btn btn-sm btn-info me-2">Order Details</a>
+          <a th:href="@{/order/delete/{id}(id=${order.id})}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</th:block>
+
+</html>
