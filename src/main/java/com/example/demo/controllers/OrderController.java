@@ -42,6 +42,13 @@ public class OrderController {
     public String getAllOrders(Model model, Principal principal) {
         //Get all orders
         List<Orders> orders = orderService.getAllOrders();
+        //Portion to add in
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        String email = user.getEmail();
+        //Added portion
+        model.addAttribute("email",email);
+        //End
         model.addAttribute("order", orders);
         return "order/index";
     }
