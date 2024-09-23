@@ -42,6 +42,11 @@ public class OrderController {
     public String getAllOrders(Model model, Principal principal) {
         //Get all orders
         List<Orders> orders = orderService.getAllOrders();
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        String email = user.getEmail();
+
+        model.addAttribute("email",email);
         model.addAttribute("order", orders);
         return "order/index";
     }
