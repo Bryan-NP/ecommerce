@@ -18,5 +18,10 @@ public interface OrderItemRepo extends JpaRepository<OrderItem, Long> {
     // Compare the order's ID (o.order.id) with the provided orderId
     @Query("SELECT o FROM OrderItem o WHERE o.order.id = :orderId")
     List<OrderItem> findByOrder(@Param("orderId") Long orderId);
+    
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM OrderItem oi WHERE oi.order.id = :orderId")
+    void deleteByOrderId(@Param("orderId") Long orderId);
 
 }
