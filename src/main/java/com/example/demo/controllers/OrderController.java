@@ -70,32 +70,36 @@ public class OrderController {
 
     //Process Delete
     @PostMapping("/delete/{id}")
-    public String processDeleteOrder(@PathVariable Long id,Principal principal,RedirectAttributes redirectAttributes) {
-        orderItemRepo.deleteById(id);
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
-        orderRepo.deleteByUserAndId(user, id);
-        return "redirect:/order/{id}";
+    public String processDeleteOrder(@PathVariable Long id,RedirectAttributes redirectAttributes) {
+         // Find the order
+        var order = orderRepo.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid order Id:" + id));
+
+        // Delete associated order items first
+        orderItemRepo.deleteByOrderId(order.getId());
+        orderRepo.deleteById(id);
+        return "redirect:/order";
     }
 
     // Get edit form for a particular order item
 @GetMapping("/edit/{id}")
 public String getEditOrderItem(@PathVariable Long id, Model model) {
-    var orderItem = orderItemRepo.findByOrder(id);
+    var orderItem = orderRepo.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid item Id:" + id));
     model.addAttribute("orderItem", orderItem);
-    return "order/edit"; // Return to the edit form template
+    return "order/edit";
 }
 
 // Process the edited order item
 @PostMapping("/edit/{id}")
 public String processEditOrderItem(@PathVariable Long id, 
-                                    @RequestParam int quantity, 
+                                    @RequestParam String status, 
                                     RedirectAttributes redirectAttributes) {
-    var orderItem = orderItemRepo.findById(id)
+    var orderItem = orderRepo.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Invalid item Id:" + id));
-    
-    orderItem.setQuantity(quantity); // Update quantity
-    orderItemRepo.save(orderItem); // Save changes
+    System.out.println("hi" + status);
+    orderItem.setStatus(status);
+    orderRepo.save(orderItem);
     
     redirectAttributes.addFlashAttribute("message", "Order item updated successfully!");
     return "redirect:/order"; // Redirect back to the order list

@@ -13,7 +13,6 @@ public interface OrderRepo extends JpaRepository<Orders, Long> {
     Optional<Orders> findByUserAndId(User user, Long id);
     
     long countByUser(User user);
-    void deleteByUser(User user);
-    void deleteByUserAndId(User user, Long id);
+    
     
 }
