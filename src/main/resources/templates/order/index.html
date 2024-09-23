@@ -27,8 +27,8 @@
       <tr th:each="order : ${order}">
         <td th:text="${order.id}"></td>
         <td th:text="${order.user.id}"></td>
-        <td th:text="${order.user.username}"></td>
         <td th:text="${order.user.email}"></td>
+        <td th:text="${order.user.username}"></td>
         <td>
           <a th:href="@{/order/{id}(id=${order.id})}" class="btn btn-sm btn-info me-2">Order Details</a>
           <a th:href="@{/order/delete/{id}(id=${order.id})}" class="btn btn-sm btn-danger">Delete</a>
